@@ -6,6 +6,9 @@ from sklearn.cluster import KMeans
 class ClusterLogging:
 
     def __init__(self, logger=logging.Logger("logging")):
+        '''
+           By default, logger object in default configuration
+        '''
         self.nodes={}
         self.messages={}
         self.nums=0
@@ -14,9 +17,15 @@ class ClusterLogging:
         self.construction = False
 
     def registerNode(self, title):
+        '''
+           register node by the name
+        '''
         self.nodes[title]=len(self.nodes) + 1
 
     def registerMessage(self, msg, num):
+        '''
+           register message for clustering
+        '''
         self.nums += 1
         self.messages[msg]=num
 
