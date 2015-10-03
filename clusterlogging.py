@@ -11,6 +11,7 @@ class ClusterLogging:
         self.nums=0
         self.logger=logger
         self.matrix=None
+        self.construction = False
 
     def registerNode(self, title):
         self.nodes[title]=len(self.nodes) + 1
@@ -38,12 +39,16 @@ class ClusterLogging:
         self._applymsg(self.logger.info, nodename, msg)
 
     def construct(self):
+        self.construction = True
         self.matrix=np.ones((len(self.nodes), self.nums,))
 
     def clustering(self, numclusters=3):
         '''
           Return list of tuples with (node name, cluster)
         '''
+        if self.construction is False:
+            raise Exception("Clusters was not constructed")
+
         if self.matrix is None:
             raise Exception("Matrix object is not initialize")
         norm = self.matrix/np.max(self.matrix)
