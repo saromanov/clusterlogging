@@ -34,5 +34,5 @@ result = logg.clustering()
 
 ```
 
-### LICENCE
+### LICENSE
 MIT
