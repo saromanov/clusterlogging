@@ -27,9 +27,10 @@ class ClusterLogging:
            register message for clustering
         '''
         self.nums += 1
-        self.messages[msg]=num
+        self.messages[msg.lower()]=num
 
     def addLogMessage(self, nodename, msg):
+        msg = msg.lower()
         if nodename not in self.nodes:
             raise Exception("Nodename {0} is not register".format(nodename))
         if msg not in self.messages:
@@ -50,6 +51,19 @@ class ClusterLogging:
     def construct(self):
         self.construction = True
         self.matrix=np.ones((len(self.nodes), self.nums,))
+
+    def clustering_from_file(self, path):
+        '''Load file and apply clustering for messages
+        '''
+        f = open(path, 'r')
+        data = f.readLines()
+        if len(data) == 0:
+            raise Exception("File is empty")
+        for item in data:
+            splitter = item.split(":")
+            self.addLogMessage(splitter[0], splitter[1])
+
+        return self.clustering()
 
     def clustering(self, numclusters=3):
         '''
